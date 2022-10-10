@@ -5,6 +5,30 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { Store } from "../../utils/Store";
 const baseUrl = process.env.BASE_URL;
 
+export async function getStaticPaths() {
+  const res = await axios.get(baseUrl + "/api/gadgets");
+  const gadgets = res.data.data;
+  const paths = gadgets.map((g) => {
+    return {
+      params: { id: g._id.toString() },
+    };
+  });
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
+export async function getStaticProps(context) {
+  const id = context.params.id;
+
+  const getGadget = await axios.get(baseUrl + "/api/gadgets/" + id);
+
+  return {
+    props: { propGadget: getGadget.data.data },
+  };
+}
+
 const Gadget = ({ propGadget }) => {
   const { state, dispatch } = useContext(Store);
   const [quantity, setQantity] = useState(1);
@@ -123,26 +147,3 @@ const Gadget = ({ propGadget }) => {
 };
 
 export default Gadget;
-export const getStaticPaths = async () => {
-  const res = await axios.get(baseUrl + "/api/gadgets");
-  const gadgets = res.data.data;
-  const paths = gadgets.map((g) => {
-    return {
-      params: { id: g._id.toString() },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-export const getStaticProps = async (context) => {
-  const id = context.params.id;
-
-  const getGadget = await axios.get(baseUrl + "/api/gadgets/" + id);
-
-  return {
-    props: { propGadget: getGadget.data.data },
-  };
-};
