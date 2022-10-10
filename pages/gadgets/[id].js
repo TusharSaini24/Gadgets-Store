@@ -29,7 +29,8 @@ export async function getStaticProps(context) {
   };
 }
 
-const Gadget = ({ propGadget }) => {
+const Gadget = (props) => {
+  const { propGadget } = props;
   const { state, dispatch } = useContext(Store);
   const [quantity, setQantity] = useState(1);
 
@@ -50,6 +51,13 @@ const Gadget = ({ propGadget }) => {
         </Link>
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+            <button
+              onClick={() => {
+                console.log("props : ", props);
+              }}
+            >
+              click to see props
+            </button>
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
               {propGadget.name}
             </h2>
