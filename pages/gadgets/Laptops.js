@@ -1,15 +1,12 @@
-import axios from "axios";
-
 import Link from "next/link";
-// import gadgets from "../data/gadgets";
+import axios from "axios";
 const baseUrl = process.env.BASE_URL;
-
-export default function Home({ gadgets }) {
+const Laptops = ({ laptops }) => {
   return (
     <section className="text-gray-600 body-font ">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
-          {gadgets?.map((gadget, index) => (
+          {laptops?.map((gadget, index) => (
             <Link href={`/gadgets/${gadget._id}`} key={index}>
               <div className="lg:w-1/4 md:w-1/2 p-4 w-full cursor-pointer">
                 <a className="block relative h-48 rounded overflow-hidden">
@@ -35,12 +32,13 @@ export default function Home({ gadgets }) {
       </div>
     </section>
   );
-}
+};
 
 export async function getServerSideProps(context) {
-  const res = await axios.get(baseUrl + "/api/gadgets");
-
+  const res = await axios.get(baseUrl + "/api/gadgets/category/laptops");
   return {
-    props: { gadgets: res.data.data },
+    props: { laptops: res.data.data },
   };
 }
+
+export default Laptops;
