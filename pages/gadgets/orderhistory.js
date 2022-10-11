@@ -13,7 +13,7 @@ const OrderHistoryScreen = () => {
     const run = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/api/gadgets/order/" + state.user._id
+          "/api/gadgets/order/" + state.user._id
         );
         setOrderHistory(data.data[0]);
       } catch (err) {
