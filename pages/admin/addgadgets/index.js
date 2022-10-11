@@ -14,10 +14,10 @@ const AddGadgetScreen = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [rating, setRating] = useState("");
-  const [numReviews, setNumReviews] = useState("");
-  const [price, setPrice] = useState("");
-  const [countInStock, setCountInStock] = useState("");
+  const [rating, setRating] = useState(0);
+  const [numReviews, setNumReviews] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [countInStock, setCountInStock] = useState(0);
 
   useEffect(() => {
     console.log(
@@ -67,10 +67,10 @@ const AddGadgetScreen = () => {
               setBrand("");
               setCategory("");
               setDescription("");
-              setRating("");
-              setNumReviews("");
-              setPrice("");
-              setCountInStock("");
+              setRating(0);
+              setNumReviews(0);
+              setPrice(0);
+              setCountInStock(0);
             } else {
               toast.error("gadget not inserted");
             }
