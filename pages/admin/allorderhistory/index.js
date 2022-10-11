@@ -26,9 +26,7 @@ const OrderHistoryScreen = () => {
   useEffect(() => {
     const run = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:3000/api/admin/orderhistory"
-        );
+        const { data } = await axios.get("/api/admin/orderhistory");
         setOrderHistory(data.data);
         console.log("data.data", data.data);
       } catch (err) {
