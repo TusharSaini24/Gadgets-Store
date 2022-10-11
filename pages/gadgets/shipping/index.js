@@ -76,17 +76,27 @@ const ShippingScreen = () => {
 
         const isPaid = true;
         try {
-          const res = await axios.post("/api/gadgets/order", {
-            user: state?.user?._id,
-            orderItems,
-            shippingAddress,
-            paymentMethod,
-            paymentResult,
-            taxPrice: taxPrice,
-            shippingPrice,
-            totalPrice: totalPrice,
-            isPaid,
-          });
+          const config = {
+            headers: {
+              "Contnet-Type": "application/json",
+              authorization: `Bearer ${state?.user?.token}`,
+            },
+          };
+          const res = await axios.post(
+            "/api/gadgets/order",
+            {
+              user: state?.user?._id,
+              orderItems,
+              shippingAddress,
+              paymentMethod,
+              paymentResult,
+              taxPrice: taxPrice,
+              shippingPrice,
+              totalPrice: totalPrice,
+              isPaid,
+            },
+            config
+          );
 
           if (res.status === 200) {
             toast.success("order has been place successfully");

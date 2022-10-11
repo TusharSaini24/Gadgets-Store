@@ -23,10 +23,17 @@ const OrderHistoryScreen = () => {
       }, 1000);
     }
   }, [state.user]);
+
   useEffect(() => {
     const run = async () => {
       try {
-        const { data } = await axios.get("/api/admin/orderhistory");
+        const config = {
+          headers: {
+            "Contnet-Type": "application/json",
+            authorization: `Bearer ${state?.user?.token}`,
+          },
+        };
+        const { data } = await axios.get("/api/admin/orderhistory", config);
         setOrderHistory(data.data);
         console.log("data.data", data.data);
       } catch (err) {

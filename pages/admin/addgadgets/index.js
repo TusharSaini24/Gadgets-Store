@@ -57,8 +57,14 @@ const AddGadgetScreen = () => {
           price,
           countInStock,
         };
+        const config = {
+          headers: {
+            "Contnet-Type": "application/json",
+            authorization: `Bearer ${state?.user?.token}`,
+          },
+        };
         const { data } = axios
-          .post("/api/admin/gadgets", gadget)
+          .post("/api/admin/gadgets", gadget, config)
           .then((res) => {
             if (res.data.success) {
               toast.success("gadget success inserted");
