@@ -41,16 +41,16 @@ const OrderHistoryScreen = () => {
             <tbody>
               {orderHistory.orderItems?.map((gadget, index) => (
                 <tr key={index} className="border-b-2 my-4 ">
-                  <td className="px-3 py-2 text-center">{gadget._id}</td>
-                  <td className="px-3 py-2 text-center">{gadget.name}</td>
+                  <td className="px-3 py-2 text-center">{gadget?._id}</td>
+                  <td className="px-3 py-2 text-center">{gadget?.name}</td>
                   <td className="px-3 py-2">
-                    {orderHistory.createdAt.split("T")[0]}
+                    {orderHistory?.createdAt?.split("T")[0]}
                   </td>
                   <td className="px-3 py-2 text-center">
-                    {gadget.isPaid ? "Paid" : "not Paid"}
+                    {gadget?.isPaid ? "Paid" : "not Paid"}
                   </td>
                   <td className="px-3 py-2 text-center">
-                    {gadget.isDelivered ? "Delivered" : "not Delivered"}
+                    {gadget?.isDelivered ? "Delivered" : "not Delivered"}
                   </td>
                   <td>
                     <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
