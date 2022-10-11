@@ -19,7 +19,7 @@ const Header = ({ handleSideMenu }) => {
     setCartItemCount(
       Number(state.cart.cartItems.reduce((a, c) => a + c.quantity, 0))
     );
-  }, [state.cart.cartItems, state.user]);
+  }, [state?.cart?.cartItems, state?.user]);
 
   return (
     <header className="text-gray-600 body-font ">

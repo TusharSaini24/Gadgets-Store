@@ -20,11 +20,6 @@ const AddGadgetScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
 
   useEffect(() => {
-    console.log(
-      "add gagets Object.keys(state?.user).length",
-      Object.keys(state?.user).length
-    );
-    console.log("state?.user?.isAdmin ", state?.user?.isAdmin);
     if (
       Object.keys(state?.user).length === 0 ||
       state?.user?.isAdmin === false
@@ -44,8 +39,6 @@ const AddGadgetScreen = () => {
     axios
       .post("https://api.cloudinary.com/v1_1/dautuqebn/image/upload", formData)
       .then((response) => {
-        console.log(response.data.url);
-
         const gadget = {
           name,
           image: response.data.url,

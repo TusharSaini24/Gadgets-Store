@@ -20,7 +20,7 @@ const LoginScreen = () => {
           email: email,
           password: password,
         });
-        console.log("res", res);
+
         if (res.data.success) {
           toast.success(res.data.message);
         } else {

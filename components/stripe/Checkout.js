@@ -4,7 +4,6 @@ import StripeCheckout from "react-stripe-checkout";
 
 const Checkout = ({ subTotal, handlePaymentResult }) => {
   const tokenHandler = (token) => {
-    console.log(token);
     handlePaymentResult({
       transacitionId: token.id,
       email: token.email,

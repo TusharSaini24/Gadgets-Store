@@ -43,8 +43,6 @@ const Gadget = (props) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    console.log("state?.user", state?.user);
-    console.log("state?.user?.isAdmin", state?.user?.isAdmin);
     setIsAdmin(state?.user?.isAdmin);
   }, [state.user]);
 

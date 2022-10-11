@@ -16,7 +16,7 @@ const SignupScreen = () => {
         email: email,
         password: password,
       });
-      console.log(res.data);
+
       if (res.data.success) {
         toast.success(res.data.message);
         router.push("/login");

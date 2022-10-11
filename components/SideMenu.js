@@ -1,16 +1,18 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { Store } from "../utils/Store";
 
 const SideMenu = ({ handleSideMenu }) => {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     setIsAdmin(state.user.isAdmin);
   }, [state.user]);
-  console.log(state);
+  console.log(dispatch);
   return (
     <div className="flex fixed top-0 right-0  w-3/12 h-screen bg-green-600 z-50 transition-all ease-in-out">
       <button
@@ -73,7 +75,8 @@ const SideMenu = ({ handleSideMenu }) => {
           className="text-white cursor-pointer"
           onClick={() => {
             console.log("before dispatch");
-            dispatch("USER_LOGOUT");
+            dispatch({ type: "USER_LOGOUT" });
+            router.push("/");
           }}
         >
           Log out

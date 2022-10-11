@@ -8,11 +8,6 @@ const OrderHistoryScreen = () => {
   const { state, dispatch } = useContext(Store);
   const [orderHistory, setOrderHistory] = useState(null);
   useEffect(() => {
-    console.log(
-      "add gagets Object.keys(state?.user).length",
-      Object.keys(state?.user).length
-    );
-    console.log("state?.user?.isAdmin ", state?.user?.isAdmin);
     if (
       Object.keys(state?.user).length === 0 ||
       state?.user?.isAdmin === false
@@ -35,14 +30,13 @@ const OrderHistoryScreen = () => {
         };
         const { data } = await axios.get("/api/admin/orderhistory", config);
         setOrderHistory(data.data);
-        console.log("data.data", data.data);
       } catch (err) {
         console.log(err);
       }
     };
     run();
   }, []);
-  console.log("res", orderHistory);
+
   return (
     <>
       {Object.keys(state?.user).length === 0 ||

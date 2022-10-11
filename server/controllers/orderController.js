@@ -2,7 +2,6 @@ import orderModel from "../models/orderModel";
 
 const createOrder = async (req, res) => {
   try {
-    console.log("req.body ", req.body);
     const {
       user,
       orderItems,
@@ -35,7 +34,6 @@ const createOrder = async (req, res) => {
         .json({ success: true, message: "order created ", data: createOrder });
     }
   } catch (err) {
-    console.log("error", err.stack);
     res.status(500).json({
       success: false,
       message: "server error",
@@ -45,8 +43,6 @@ const createOrder = async (req, res) => {
 };
 
 const getOrderById = async (req, res) => {
-  console.log("first");
-  console.log(req.query.id);
   try {
     const order = await orderModel.find({ user: req.query.id });
     if (order) {
