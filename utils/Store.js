@@ -72,11 +72,11 @@ function reducer(state, action) {
     case "USER_LOGOUT": {
       Cookies.remove("user");
 
-      // return {
-      //   ...state,
-      //   user: {},
-      // };
-      return {};
+      return {
+        ...state,
+        user: {},
+      };
+      // return {};
     }
 
     default:
