@@ -15,19 +15,6 @@ const getAllGadgets = async (req, res) => {
   }
 };
 
-const createGadgets = async (req, res) => {
-  try {
-    const gadget = gadgetModel.create(req.body);
-    res
-      .status(200)
-      .json({ success: true, message: "data inserted", data: gadget });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ success: false, message: "server error", error: err });
-  }
-};
-
 const getGadget = async (req, res) => {
   try {
     const gadget = await gadgetModel.findById(req.query.id);
@@ -81,11 +68,4 @@ const getAndroidPhones = async (req, res) => {
       .json({ success: false, message: "server error", error: err });
   }
 };
-export {
-  getAllGadgets,
-  createGadgets,
-  getGadget,
-  getLaptops,
-  getGuitars,
-  getAndroidPhones,
-};
+export { getAllGadgets, getGadget, getLaptops, getGuitars, getAndroidPhones };

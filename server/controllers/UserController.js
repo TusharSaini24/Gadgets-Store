@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
 
     const userExist = await userModel.findOne({ email });
     if (userExist) {
-      res.status(400).json({ success: false, message: "email already exist" });
+      res.status(201).json({ success: false, message: "email already exist" });
     }
 
     const user = await userModel.create({ name, email, password });
@@ -45,14 +45,18 @@ const loginUser = async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
       res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id),
+        success: true,
+        message: "user logged in successfully",
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          token: generateToken(user._id),
+        },
       });
     } else {
-      res.status(401).json({
+      res.status(301).json({
         success: false,
         message: "Invalid email or password",
       });

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { HiOutlineMenu } from "react-icons/hi";
 import { BsSearch, BsFillCartFill } from "react-icons/bs";
+import { IoMdAdd } from "react-icons/io";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Store";
@@ -11,8 +12,10 @@ const Header = ({ handleSideMenu }) => {
   const { state, dispatch } = useContext(Store);
   const [userName, setUserName] = useState("");
   const [cartItemsCount, setCartItemCount] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
-    setUserName(state.user ? state.user.name : "");
+    setUserName(state?.user ? state.user.name : "");
+    setIsAdmin(state?.user?.isAdmin);
     setCartItemCount(
       Number(state.cart.cartItems.reduce((a, c) => a + c.quantity, 0))
     );
@@ -42,16 +45,24 @@ const Header = ({ handleSideMenu }) => {
           </div>
         </nav>
         <button className="  inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          <Link href={"/gadgets/cart"}>
-            <a className="relative">
-              <BsFillCartFill className="w-6 h-6 text-gray-600 hover:text-gray-900" />
-              {cartItemsCount > 0 && (
-                <span className="absolute top-2 ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                  {cartItemsCount}
-                </span>
-              )}
-            </a>
-          </Link>
+          {isAdmin ? (
+            <Link href={"/admin/addgadgets"}>
+              <a className="relative mx-auto">
+                <IoMdAdd className="mx-auto " /> gadget
+              </a>
+            </Link>
+          ) : (
+            <Link href={"/gadgets/cart"}>
+              <a className="relative">
+                <BsFillCartFill className="w-6 h-6 text-gray-600 hover:text-gray-900" />
+                {cartItemsCount > 0 && (
+                  <span className="absolute top-2 ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </a>
+            </Link>
+          )}
         </button>
         <button className=" ml-5 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
           <Link href={"/login"}>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { FaSadCry } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { Store } from "../../utils/Store";
 const baseUrl = process.env.BASE_URL;
@@ -33,6 +34,13 @@ const Gadget = (props) => {
   const { propGadget } = props;
   const { state, dispatch } = useContext(Store);
   const [quantity, setQantity] = useState(1);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    console.log("state?.user", state?.user);
+    console.log("state?.user?.isAdmin", state?.user?.isAdmin);
+    setIsAdmin(state?.user?.isAdmin);
+  }, [state.user]);
 
   const addToCartHandler = () => {
     dispatch({
@@ -51,13 +59,6 @@ const Gadget = (props) => {
         </Link>
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-            <button
-              onClick={() => {
-                console.log("props : ", props);
-              }}
-            >
-              click to see props
-            </button>
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
               {propGadget?.name ?? "nameNotDefined"}
             </h2>
@@ -76,7 +77,7 @@ const Gadget = (props) => {
               </a> */}
             </div>
             <p className="leading-relaxed mb-4">
-              {/* {propGadget.description} */}
+              {propGadget?.description ?? "descriptionNotDefined"}
               <br />
               Fam locavore kickstarter distillery. Mixtape chillwave tumeric
               sriracha taximy chia microdosing tilde DIY. XOXO fam inxigo
@@ -88,47 +89,55 @@ const Gadget = (props) => {
             <div className="flex border-t border-b mb-6 border-gray-200 py-2">
               <span className="text-gray-500">Quantity</span>
               <span className="ml-auto text-gray-900">
-                {/* {propGadget.countInStock} */}
+                {propGadget?.countInStock ?? "countInStock not defined"}
               </span>
             </div>
             <div className="flex my-2 items-center">
               <span className="mr-3">Qty</span>
-              <div className="relative">
-                <select
-                  className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10"
-                  onChange={(e) => setQantity(e.target.value)}
-                >
-                  {/* {[...Array(propGadget.countInStock).keys()].map((x) => (
-                    <option key={x + 1}>{x + 1}</option>
-                  ))} */}
-                </select>
-                <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
+              {isAdmin ? (
+                `${propGadget.countInStock}`
+              ) : (
+                <div className="relative">
+                  <select
+                    className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10"
+                    onChange={(e) => setQantity(e.target.value)}
                   >
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
-                </span>
-              </div>
+                    {[...Array(propGadget?.countInStock).keys()].map((x) => (
+                      <option key={x + 1}>{x + 1}</option>
+                    ))}
+                  </select>
+                  <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  </span>
+                </div>
+              )}
             </div>
+
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">
-                {/* &#x20B9; {propGadget.price} */}
+                &#x20B9; {propGadget?.price}
               </span>
-              {/* <Link href={`gadgets/cart/${propGadget._id}`}> */}
-              <button
-                className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
-                onClick={addToCartHandler}
-              >
-                Add To Cart
-              </button>
-              {/* </Link> */}
+              {isAdmin === false || isAdmin === undefined ? (
+                <button
+                  className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
+                  onClick={addToCartHandler}
+                >
+                  Add To Cart
+                </button>
+              ) : (
+                ""
+              )}
+
               <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                 <svg
                   fill="currentColor"
@@ -143,11 +152,11 @@ const Gadget = (props) => {
               </button>
             </div>
           </div>
-          {/* <img
+          <img
             alt="ecommerce"
             className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-            src={propGadget.image}
-          /> */}
+            src={propGadget?.image}
+          />
         </div>
       </div>
     </section>

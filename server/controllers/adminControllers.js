@@ -1,5 +1,8 @@
 import userModel from "../models/userModel";
+import orderModel from "../models/orderModel";
+import gadgetModel from "../models/gadgetModel";
 import { generateToken } from "../utils/generateToken";
+
 const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -32,4 +35,43 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { adminLogin };
+// order controller
+
+const getAllOrder = async (req, res) => {
+  try {
+    const order = await orderModel.find();
+    if (order) {
+      res
+        .status(200)
+        .json({ success: true, message: "order fetch ", data: order });
+    } else {
+      res.status(401).json({ success: true, message: "order not found " });
+    }
+  } catch (err) {
+    console.log("error", err.stack);
+    res.status(500).json({
+      success: false,
+      message: "server error",
+      error: err,
+    });
+  }
+};
+
+// gadgets controller
+
+const createGadget = async (req, res) => {
+  console.log(req.body);
+  try {
+    const gadget = gadgetModel.create(req.body);
+    res
+      .status(200)
+      .json({ success: true, message: "data inserted", data: gadget });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ success: false, message: "server error", error: err });
+  }
+};
+
+export { adminLogin, getAllOrder, createGadget };
